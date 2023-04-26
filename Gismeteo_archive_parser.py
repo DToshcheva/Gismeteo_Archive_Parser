@@ -34,7 +34,7 @@ def get_info(countries_id):
     district_list = []
     url_districts = f"https://www.gismeteo.ru/inform-service/63466572668a39754a9ddf4c8b3437b0/districts/?country={countries_id}&fr=sel"
     d = requests.get(url_districts, headers=headers)
-    districts_id = [i.get('id') for i in BeautifulSoup(d.text, 'xml').find_all('item')][:5]
+    districts_id = [i.get('id') for i in BeautifulSoup(d.text, 'xml').find_all('item')]
     district_list.extend(districts_id)
 
     # Создаем список ссылок для requests.get для обращения к конкретному городу
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     # requests.get собирает все доступные страны
     url_countries = "https://www.gismeteo.ru/inform-service/63466572668a39754a9ddf4c8b3437b0/countries/?fr=sel"
     c = requests.get(url_countries, headers=headers)
-    countries_id = [i.get('id') for i in BeautifulSoup(c.text, 'xml').find_all('item')][:5]
+    countries_id = [i.get('id') for i in BeautifulSoup(c.text, 'xml').find_all('item')]
 
     with multiprocessing.Pool(60) as p:
         r = p.map(get_info, countries_id)
